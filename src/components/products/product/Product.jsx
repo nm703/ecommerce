@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-function Product({ product }) {
+function Product({ product, onAddToCart }) {
     return (
         <Card sx={{
             maxWidth: '100%',
@@ -11,7 +11,7 @@ function Product({ product }) {
             <CardMedia sx={{
                 height: 0,
                 paddingTop: '56.25%',
-            }} className='media' image={product.image} title={product.name} />
+            }} className='media' image={product.image.url} title={product.name} />
             <CardContent>
                 <div sx={{
                     display: 'flex',
@@ -22,19 +22,18 @@ function Product({ product }) {
                         {product.name}
                     </Typography>
                     <Typography variant='h5'>
-                        {product.price}
+                        {product.price.formatted_with_symbol}
                     </Typography>
 
                 </div>
-                <Typography variant='body2' color="textSecondary">
-                    {product.description}
-                </Typography>
+                <Typography dangerouslySetInnerHTML={{__html:product.description}} variant='body2' color="textSecondary" />
+                
             </CardContent>
             <CardActions disableSpacing className='cardActions' sx={{
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                <IconButton aria-label='Add to Cart'>
+                <IconButton aria-label='Add to Cart' onClick={()=> onAddToCart(product.id, 1)}>
                     <ShoppingCartIcon />
 
                 </IconButton>
